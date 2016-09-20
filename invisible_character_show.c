@@ -1,24 +1,30 @@
 #include <stdio.h>
+#include <string.h>
 
-void main(void) {
+int main(int argv, char* args[]) {
     int c;
-
-    while((c = getchar()) != EOF) {
+    FILE* src;
+    FILE* des;
+    src = fopen(args[1], "r");
+    des = fopen(strcat(args[1], ".show"), "w");
+    while((c = getc(src)) != EOF) {
         if (c == '\t') {
-            putchar('\\');
-            putchar('t');
+            putc('\\', des);
+            putc('t', des);
             continue;
         }
         if (c == '\b') {
-            putchar('\\');
-            putchar('b');
+            putc('\\', des);
+            putc('b', des);
             continue;
         }
         if (c == '\\') {
-            putchar('\\');
-            putchar('\\');
+            putc('\\', des);
+            putc('\\', des);
             continue;
         }
-        putchar(c);
+        putc(c, des);
     }
+    fclose(src);
+    fclose(des);
 }
