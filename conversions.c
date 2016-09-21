@@ -1,6 +1,8 @@
 #include <stdio.h>
+#include <ctype.h>
 
 int atoi(char s[]);
+int atoi2(char s[]);
 int lower(int c);
 int htoi(char s[]);
 
@@ -15,6 +17,19 @@ int atoi(char s[]) {
     for (i = 0; s[i] >= '0' && s[i] <= '9'; i++)
         n = 10 * n + (s[i] - '0');
     return n;
+}
+
+int atoi2(char s[]) {
+    int i, n, sign;
+
+    for (i = 0; isspace(s[i]); i++)
+        ;
+    sign = (s[i] == '-') ? -1 : 1;
+    if (s[i] == '-' || s[i] == '+')
+        i++;
+    for (n = 0; isdigit(s[i]); i++)
+        n = n * 10 + (s[i] - '0');
+    return sign * n;
 }
 
 int lower(int c) {
