@@ -4,12 +4,15 @@
 void itoa(int n, char s[], int len);
 int itoc(int i);
 void reverse(char s[]);
+int itoa2(int n, char s[]);
 
 void main(void) {
-    char s[200];
+    char s[200] ,s2[200];
 
     itoa(238767, s, 16);
     printf("%s\n", s);
+    itoa2(238767, s2);
+    printf("%s\n", s2);
 }
 
 void itoa(int n, char s[], int len) {
@@ -28,6 +31,20 @@ void itoa(int n, char s[], int len) {
         s[i++] = ' ';
     s[i] = '\0';
     reverse(s);
+}
+
+int itoa2(int n, char s[]) {
+    int j = 0;
+
+    if (n < 0) {
+        s[j++] = '-';
+        n = -n;
+    }        
+
+    if (n/10)
+        j = itoa2(n/10, s);
+    s[j++] = n % 10 + '0';
+    return j;
 }
 
 int itoc(int i) {

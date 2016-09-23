@@ -3,13 +3,14 @@
 
 int getline2(char s[], int lim);
 void reverse(char s[]);
+int rec_reverse(char s[], int i);
 
 void main(void) {
     int len;
     char line[MAXLENGTH];
     
     while((len = getline2(line, MAXLENGTH)) != 0) {
-        reverse(line);
+        rec_reverse(line, 0);
         printf("%s", line);        
    }
 }
@@ -41,4 +42,19 @@ void reverse(char s[]) {
         s[i] = tmp;
     }
         
+}
+
+int rec_reverse(char s[], int i) {
+    int j;
+    char c;
+
+    c = s[i];
+    if (s[i] == '\0' || s[i] == '\n') 
+        j = -1;
+    else  {        
+        j = rec_reverse(s, i+1);
+        s[j] = c;
+    }
+
+    return j+1;
 }

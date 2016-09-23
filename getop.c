@@ -1,17 +1,24 @@
 #include <ctype.h>
 #include <stdio.h>
-#define NUMBER '0'
-#define BUFSIZE 100
-
-int getch();
-void ungetch(int);
-void ungets(char s[]);
+#include "calc.h"
 
 int getop(char s[]) {
     int i, c;
+    static int lc = EOF;
 
-    while ((s[0] = c = getch()) == ' ' || c == '\t')
-        ;
+    if (lc != EOF && lc != ' ' && lc != '\t'
+        && !isdigit(c) && lc != '.') {
+        c = lc;
+        lc = EOF;
+        s[1] = '\0';
+        return c;
+    }
+
+    if (lc == EOF || lc == ' ' || c == '\t')
+        while ((s[0] = c = getch()) == ' ' || c == '\t')
+            ;
+    else
+        s[0] = c = lc;
     s[1] = '\0';
 
     if (!isdigit(c) && c != '.')
@@ -26,31 +33,6 @@ int getop(char s[]) {
             ;
     s[i] = '\0';
     if (c != EOF)
-        ungetch(c);
+        lc = c;
     return NUMBER;
-}
-
-
-char buf[BUFSIZE];
-int bufp = 0;
-
-int getch() {
-  if (bufp > 0)
-      return buf[--bufp];
-  else
-      return getchar();
-}
-
-void ungetch(int c) {
-  if (bufp >= BUFSIZE)
-      printf("ungetch: too many characters\n");
-  else
-      buf[bufp++] = c;
-}
-
-void ungets(char s[]) {
-  int i;
-
-  for (i = 0; s[i] != '\0'; i++)
-      ungetch(s[i]);
 }
