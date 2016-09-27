@@ -3,6 +3,7 @@
 
 
 void atoi(long n, char s[]);
+void atoip(long n, char *s);
 void reverse(char s[]);
 
 void main(void) {
@@ -24,6 +25,20 @@ void atoi(long n, char s[]) {
     if (sign < 0)
         s[i++] = '-';
     s[i] = '\0';
+    reverse(s);
+}
+
+void atoip(long n, char *s) {
+    int sign,i;
+    
+    if ((sign = n) < 0)
+        n = -n;
+    do {
+        *s++ = n % 10 + '0'
+    } while ((n /= 10) > 0);
+    if (sign < 0)
+        *s++ = '-';
+    *s = '\0';
     reverse(s);
 }
 
