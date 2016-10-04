@@ -1,4 +1,5 @@
 #include <stdarg.h>
+#include <stdio.h>
 
 void minprintf(char *fmt, ...) {
     va_list ap;
@@ -7,7 +8,7 @@ void minprintf(char *fmt, ...) {
     double dval;
 
     va_start(ap, fmt);
-    for (p = ap; *p; p++) {
+    for (p = fmt; *p; p++) {
         if (*p != '%') {
             putchar(*p);
             continue;
@@ -30,4 +31,8 @@ void minprintf(char *fmt, ...) {
         }
     }
     va_end(ap);
+}
+
+void main(void) {
+    minprintf("%s", "hello\n");
 }
